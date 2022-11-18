@@ -45,19 +45,16 @@
     >
   </div>
   <div>
-    <mat-form-field appearance="fill"
-      ><mat-label>Category</mat-label
-      ><input
-        matInput
-        type="text"
-        placeholder="Category"
-        formControlName="category"
-        required
-      /><mat-error *ngIf="productForm.get('category')!.invalid"
-        >category is invalid</mat-error
-      ></mat-form-field
-    >
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a category</mat-label>
+      <mat-select formControlName="category">
+        <mat-option *ngFor="let item of data$ | async" [value]="item">
+          {{ item }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+
   <div>
     <mat-form-field appearance="fill"
       ><mat-label>Image</mat-label

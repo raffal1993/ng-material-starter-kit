@@ -7,6 +7,7 @@ import { ProductComponentModule } from './components/product/product.component-m
 import { ProductServiceModule } from './services/product.service-module';
 import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { CategoriesServiceModule } from './services/categories.service-module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     ProductComponentModule,
     ProductServiceModule,
+    CategoriesServiceModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

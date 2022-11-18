@@ -4,7 +4,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ProductService } from '../../services/product.service';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-product',
@@ -14,7 +16,10 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent {
-  constructor(private _productService: ProductService) {}
+  constructor(
+    private _productService: ProductService,
+    private _categoriesService: CategoriesService
+  ) {}
 
   readonly productForm: FormGroup = new FormGroup({
     title: new FormControl(),
@@ -35,4 +40,6 @@ export class ProductComponent {
       })
       .subscribe();
   }
+
+  readonly data$: Observable<string[]> = this._categoriesService.getAll();
 }
