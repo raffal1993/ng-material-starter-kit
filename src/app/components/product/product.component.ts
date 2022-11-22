@@ -10,19 +10,19 @@ import { ProductModel } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
 @Component({
-  selector: 'app-product-detail',
-  styleUrls: ['./product-detail.component.scss'],
-  templateUrl: './product-detail.component.html',
+  selector: 'app-product',
+  styleUrls: ['./product.component.scss'],
+  templateUrl: './product.component.html',
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductDetailComponent {
+export class ProductComponent {
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _productService: ProductService
   ) {}
 
-  readonly productDetails$: Observable<ProductModel> =
+  readonly product$: Observable<ProductModel> =
     this._activatedRoute.params.pipe(
       switchMap((data) => this._productService.getOne(data['id']))
     );
