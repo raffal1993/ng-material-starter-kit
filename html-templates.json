@@ -100,6 +100,10 @@
     "title-description": {
       "container": "<ng-container *ngIf=\"$detailVariable$ | async as $itemVariable$\">$content$</ng-container>",
       "content": "<h1>$title</h1>\n<p>$description$</p>"
-    }
+    },
+    "mat-title-content-button": {
+      "container": "<mat-card *ngIf=\"$data | async as item\">\n$content$</mat-card>",
+      "content": "<mat-card-title>$TITLE$</mat-card-title>\n<mat-card-content>$CONTENT$</mat-card-content>\n<mat-button-toggle (click)=\"$yourFn$()\">$BUTTON_TEXT$</mat-button-toggle>"
+}
   }
 }

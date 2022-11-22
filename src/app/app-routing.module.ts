@@ -5,6 +5,7 @@ import { CatFactComponent } from './components/cat-fact/cat-fact.component';
 import { AgePredictionComponent } from './components/age-prediction/age-prediction.component';
 import { CartComponent } from './components/cart/cart.component';
 import { UserComponent } from './components/user/user.component';
+import { JokeComponent } from './components/joke/joke.component';
 import { ProductComponentModule } from './components/product/product.component-module';
 import { ProductServiceModule } from './services/product.service-module';
 import { CatFactComponentModule } from './components/cat-fact/cat-fact.component-module';
@@ -15,6 +16,8 @@ import { CartComponentModule } from './components/cart/cart.component-module';
 import { CartServiceModule } from './services/cart.service-module';
 import { UserComponentModule } from './components/user/user.component-module';
 import { UserServiceModule } from './services/user.service-module';
+import { JokeComponentModule } from './components/joke/joke.component-module';
+import { JokeServiceModule } from './services/joke.service-module';
 
 @NgModule({
   imports: [
@@ -24,6 +27,7 @@ import { UserServiceModule } from './services/user.service-module';
       { path: 'age/:name', component: AgePredictionComponent },
       { path: 'cart/:id', component: CartComponent },
       { path: 'user/:id', component: UserComponent },
+      { path: 'joke', component: JokeComponent }
     ]),
     ProductComponentModule,
     ProductServiceModule,
@@ -35,8 +39,10 @@ import { UserServiceModule } from './services/user.service-module';
     CartServiceModule,
     UserComponentModule,
     UserServiceModule,
+    JokeComponentModule,
+    JokeServiceModule
   ],
   exports: [RouterModule],
 })
 // @ts-ignore
-export class AppRoutingModule {}
+export class AppRoutingModule { }

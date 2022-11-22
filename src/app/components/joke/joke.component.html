@@ -1,0 +1,13 @@
+<div [className]="'container'">
+  <mat-card [className]="'joke'" *ngIf="joke$ | async as item">
+    <mat-card-title [className]="'joke_setup'">{{ item.setup }}</mat-card-title>
+    <mat-card-content
+      (click)="showPunchLine()"
+      [className]="'joke_punchline'"
+      >{{ item.punchline }}</mat-card-content
+    >
+    <mat-button-toggle [className]="'joke_button'" (click)="getNewJoke()"
+      >Reload joke !</mat-button-toggle
+    ></mat-card
+  >
+</div>
