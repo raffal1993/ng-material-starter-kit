@@ -3,8 +3,8 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { combineLatest, map, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, map, Observable, Subject } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 import { CategoriesService } from '../../services/categories.service';
 import { ProductsService } from '../../services/products.service';
@@ -23,17 +23,25 @@ export class FilteredProductListComponent {
     private _productsService: ProductsService
   ) {}
 
+  private _categorySubject: Subject<string> = new Subject<string>();
+
+  public category$: Observable<string> = this._categorySubject.asObservable();
+
   public categories$: Observable<CategoryModel[]> =
     this._categoriesService.getAll();
 
   readonly products$: Observable<ProductModel[]> = combineLatest([
     this._productsService.getAll(),
-    this._activatedRoute.params,
+    this.category$,
   ]).pipe(
-    map(([products, params]: [ProductModel[], Params]) => {
+    map(([products, category]: [ProductModel[], string]) => {
       return products.filter(
-        (product: ProductModel) => product.category === params['category']
+        (product: ProductModel) => product.category === category
       );
     })
   );
+
+  changeCategory(category: string) {
+    this._categorySubject.next(category);
+  }
 }

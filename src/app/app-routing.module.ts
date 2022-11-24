@@ -9,6 +9,7 @@ import { ProductsServiceModule } from './services/products.service-module';
   imports: [
     RouterModule.forRoot([
       { path: 'products/:category', component: FilteredProductListComponent },
+      { path: 'products', component: FilteredProductListComponent }
     ]),
     FilteredProductListComponentModule,
     CategoriesServiceModule,
@@ -17,4 +18,4 @@ import { ProductsServiceModule } from './services/products.service-module';
   exports: [RouterModule],
 })
 // @ts-ignore
-export class AppRoutingModule {}
+export class AppRoutingModule { }
