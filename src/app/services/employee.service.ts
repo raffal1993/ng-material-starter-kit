@@ -14,4 +14,10 @@ export class EmployeeService {
       )
       .pipe(map((res) => res.data));
   }
+
+  deleteEmployee(id: number): Observable<EmployeesModel> {
+    return this._httpClient.delete<EmployeesModel>(
+      `https://dummy.restapiexample.com/api/v1/delete/${id}`
+    );
+  }
 }

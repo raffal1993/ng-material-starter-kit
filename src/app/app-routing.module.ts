@@ -11,7 +11,7 @@ import { EmployeeServiceModule } from './services/employee.service-module';
   imports: [
     RouterModule.forRoot([
       { path: 'refresh-products', component: ProductListComponent },
-      { path: 'employees', component: EmployeesComponent },
+      { path: 'refresh-employees', component: EmployeesComponent },
     ]),
     ProductListComponentModule,
     ProductsServiceModule,
