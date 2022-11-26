@@ -3,8 +3,9 @@ import { AsyncPipe, CommonModule, NgForOf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { FlexModule } from '@angular/flex-layout/flex';
-import { EmployeesComponent } from './employees.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { EmployeesComponent } from './employees.component';
 
 @NgModule({
   imports: [
@@ -15,9 +16,10 @@ import { MatButtonModule } from '@angular/material/button';
     AsyncPipe,
     CommonModule,
     MatButtonModule,
+    MatGridListModule
   ],
   declarations: [EmployeesComponent],
   providers: [],
   exports: [EmployeesComponent],
 })
-export class EmployeesComponentModule {}
+export class EmployeesComponentModule { }

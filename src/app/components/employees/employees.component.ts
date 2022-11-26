@@ -3,7 +3,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EmployeesModel } from '../../models/employees.model';
 import { EmployeeService } from '../../services/employee.service';
@@ -15,19 +15,22 @@ import { EmployeeService } from '../../services/employee.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmployeesComponent {
-  private _refreshedEmployeesSubject: BehaviorSubject<void> =
-    new BehaviorSubject<void>(void 0);
+  readonly employees$: Observable<EmployeesModel[]> =
+    this._employeeService.getEmployees();
 
-  public refreshedEmployees$: Observable<EmployeesModel[]> =
-    this._refreshedEmployeesSubject
-      .asObservable()
-      .pipe(switchMap(() => this._employeeService.getEmployees()));
+  private _employeeDetailsIdSubject: Subject<number> = new Subject<number>();
 
-  deleteEmployee(id: number) {
-    this._employeeService
-      .deleteEmployee(id)
-      .subscribe(() => this._refreshedEmployeesSubject.next());
-  }
+  public employeeDetailsId$: Observable<number> =
+    this._employeeDetailsIdSubject.asObservable();
+
+  readonly employeeDetail$: Observable<EmployeesModel> =
+    this.employeeDetailsId$.pipe(
+      switchMap((id) => this._employeeService.getEmployee(id))
+    );
 
   constructor(private _employeeService: EmployeeService) {}
+
+  showDetails(id: number) {
+    this._employeeDetailsIdSubject.next(id);
+  }
 }

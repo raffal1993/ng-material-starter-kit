@@ -1,20 +1,15 @@
-<mat-card
-  ><mat-card-title>List of Employees: </mat-card-title
-  ><mat-card-content>
-    <mat-list role="list" *ngFor="let item of refreshedEmployees$ | async">
-      <mat-list-item role="listitem"
-        >{{ item.employee_name }} : salary:&nbsp;
-        <strong> {{ item.employee_salary.toLocaleString() }} </strong>&nbsp; ||
-        age:&nbsp;
-        <strong> {{ item.employee_age }} </strong>
-        <button
-          mat-raised-button
-          color="warn"
-          (click)="deleteEmployee(item.id)"
-        >
-          Remove Employee
+<mat-grid-list cols="2" rowHeight="1:2">
+  <mat-grid-tile>
+    <mat-list role="list"
+      ><mat-list-item role="listitem" *ngFor="let item of employees$ | async"
+        >{{ item.employee_name }}
+        <button mat-button color="primary" (click)="showDetails(item.id)">
+          Show salary
         </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+      </mat-list-item></mat-list
+    >
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="employeeDetail$ | async as item"
+    >{{ item.employee_name }} : {{ item.employee_salary }}$</mat-grid-tile
+  >
+</mat-grid-list>
