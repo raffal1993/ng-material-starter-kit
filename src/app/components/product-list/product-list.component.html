@@ -1,16 +1,16 @@
-<mat-card
-  ><mat-card-title>Products</mat-card-title>
-  <mat-card-content
-    ><mat-list role="list"
-      ><mat-list-item
-        role="listitem"
-        *ngFor="let item of refreshedList$ | async"
-      >
-        {{ item.title }} {{ item.price }}
-        <button mat-raised-button color="primary" (click)="delete(item.id)">
-          Delete
+<mat-grid-list cols="2" rowHeight="1:1">
+  <mat-grid-tile>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let item of products$ | async">
+        {{ item.title }}
+        <button mat-button color="primary" (click)="selectProduct(item.id)">
+          Show details
         </button>
       </mat-list-item>
-    </mat-list></mat-card-content
-  ></mat-card
->
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="productDetails$ | async as productDetails">
+    {{ productDetails.title }} <br />
+    {{ productDetails.price }}$
+  </mat-grid-tile>
+</mat-grid-list>

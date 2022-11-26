@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { FlexModule } from '@angular/flex-layout/flex';
-import { ProductListComponent } from './product-list.component';
-import { RouterLink } from '@angular/router';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ProductListComponent } from './product-list.component';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
     RouterLink,
     MatButtonToggleModule,
     MatButtonModule,
+    MatGridListModule,
   ],
   declarations: [ProductListComponent],
   providers: [],

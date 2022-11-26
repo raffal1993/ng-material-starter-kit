@@ -3,10 +3,10 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ProductsService } from '../../services/products.service';
 import { ProductModel } from '../../models/product.model';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,21 +17,20 @@ import { ProductModel } from '../../models/product.model';
 export class ProductListComponent {
   constructor(private _productsService: ProductsService) {}
 
-  private _refreshSubject: BehaviorSubject<void> = new BehaviorSubject<void>(
-    void 0
-  );
-  public refresh$: Observable<void> = this._refreshSubject.asObservable();
+  private _selectedProductIdSubject: Subject<number> = new Subject<number>();
 
-  readonly refreshedList$: Observable<ProductModel[]> = this.refresh$.pipe(
-    switchMap(() => this._productsService.getAll())
-  );
+  public selectedProductId$: Observable<number> =
+    this._selectedProductIdSubject.asObservable();
+
+  readonly productDetails$: Observable<ProductModel> =
+    this.selectedProductId$.pipe(
+      switchMap((id) => this._productsService.getOne(id))
+    );
+
+  selectProduct(id: number) {
+    this._selectedProductIdSubject.next(id);
+  }
 
   readonly products$: Observable<ProductModel[]> =
     this._productsService.getAll();
-
-  delete(id: number): void {
-    this._productsService
-      .deleteProduct(id)
-      .subscribe(() => this._refreshSubject.next());
-  }
 }

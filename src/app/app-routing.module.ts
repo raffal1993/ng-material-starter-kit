@@ -10,7 +10,7 @@ import { EmployeeServiceModule } from './services/employee.service-module';
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: 'refresh-products', component: ProductListComponent },
+      { path: 'products-master-details', component: ProductListComponent },
       { path: 'refresh-employees', component: EmployeesComponent },
     ]),
     ProductListComponentModule,
