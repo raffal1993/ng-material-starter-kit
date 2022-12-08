@@ -9,9 +9,7 @@ export class EmployeeService {
 
   getEmployees(): Observable<EmployeesModel[]> {
     return this._httpClient
-      .get<APIResponseModel<EmployeesModel[]>>(
-        `https://dummy.restapiexample.com/api/v1/employees`
-      )
+      .get<APIResponseModel<EmployeesModel[]>>(`/api/v1/employees`)
       .pipe(map((res) => res.data));
   }
 }
