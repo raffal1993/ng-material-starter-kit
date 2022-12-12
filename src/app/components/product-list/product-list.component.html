@@ -1,16 +1,20 @@
-<mat-grid-list cols="2" rowHeight="1:1">
-  <mat-grid-tile>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let item of products$ | async">
-        {{ item.title }}
-        <button mat-button color="primary" (click)="selectProduct(item.id)">
-          Show details
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-grid-tile>
-  <mat-grid-tile *ngIf="productDetails$ | async as productDetails">
-    {{ productDetails.title }} <br />
-    {{ productDetails.price }}$
-  </mat-grid-tile>
-</mat-grid-list>
+<mat-card
+  ><mat-card-title>Product list</mat-card-title
+  ><mat-card-content
+    ><mat-list role="list" *ngIf="products$ | async as items; else loading">
+      <ng-container *ngIf="items.length > 0; else emptyState">
+        <mat-list-item role="listitem" *ngFor="let item of products$ | async">{{
+          item.title
+        }}</mat-list-item></ng-container
+      >
+      <ng-template #emptyState> Oops! There is no data! </ng-template></mat-list
+    >
+    <ng-template #loading
+      ><mat-progress-spinner
+        [color]="'primary'"
+        [mode]="'indeterminate'"
+        [value]="50"
+      >
+      </mat-progress-spinner
+    ></ng-template> </mat-card-content
+></mat-card>

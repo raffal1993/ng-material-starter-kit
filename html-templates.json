@@ -39,6 +39,16 @@
       "list": "<mat-list role=\"list\">$content$</mat-list>",
       "item": "<mat-list-item role=\"listitem\" *ngFor=\"let $itemVariable$ of $listVariable$\">{{$itemVariable$}}</mat-list-item>"
     },
+    "smart-list": {
+      "list": "<mat-list role=\"list\" *ngIf=\"$listVariable$ as items; else loading\">$content$</mat-list> <ng-template #loading\n      ><mat-progress-spinner\n        [color]=\"'primary'\"\n        [mode]=\"'indeterminate'\"\n        [value]=\"50\"\n      >\n      </mat-progress-spinner\n    ></ng-template>",
+      "item": "<mat-list-item role=\"listitem\" *ngFor=\"let $itemVariable$ of $listVariable$\">{{$itemVariable$}}</mat-list-item>"
+    },
+
+    "smart-list-emptyState": {
+      "list": "<mat-list role=\"list\" *ngIf=\"$listVariable$ as items; else loading\">$content$</mat-list> <ng-template #loading\n      ><mat-progress-spinner\n        [color]=\"'primary'\"\n        [mode]=\"'indeterminate'\"\n        [value]=\"50\"\n      >\n      </mat-progress-spinner\n    ></ng-template>",
+      "item": " <ng-container *ngIf=\"items.length > 0; else emptyState\">\n        <mat-list-item role=\"listitem\" *ngFor=\"let $itemVariable$ of $listVariable$\">{{$itemVariable$}}</mat-list-item></ng-container\n      >\n\n      <ng-template #emptyState> Oops! There is no data! </ng-template>"
+    },
+
     "selection-list": {
       "list": "<mat-selection-list role=\"list\">$content$</mat-selection-list>",
       "item": "<mat-list-option role=\"listitem\" *ngFor=\"let $itemVariable$ of $listVariable$\">{{$itemVariable$}}</mat-list-option>"
@@ -104,6 +114,6 @@
     "mat-title-content-button": {
       "container": "<mat-card *ngIf=\"$data | async as item\">\n$content$</mat-card>",
       "content": "<mat-card-title>$TITLE$</mat-card-title>\n<mat-card-content>$CONTENT$</mat-card-content>\n<mat-button-toggle (click)=\"$yourFn$()\">$BUTTON_TEXT$</mat-button-toggle>"
-}
+    }
   }
 }

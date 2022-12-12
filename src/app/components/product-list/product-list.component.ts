@@ -3,8 +3,7 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -16,20 +15,6 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductListComponent {
   constructor(private _productsService: ProductsService) {}
-
-  private _selectedProductIdSubject: Subject<number> = new Subject<number>();
-
-  public selectedProductId$: Observable<number> =
-    this._selectedProductIdSubject.asObservable();
-
-  readonly productDetails$: Observable<ProductModel> =
-    this.selectedProductId$.pipe(
-      switchMap((id) => this._productsService.getOne(id))
-    );
-
-  selectProduct(id: number) {
-    this._selectedProductIdSubject.next(id);
-  }
 
   readonly products$: Observable<ProductModel[]> =
     this._productsService.getAll();

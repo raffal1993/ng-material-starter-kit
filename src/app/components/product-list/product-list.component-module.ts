@@ -6,6 +6,7 @@ import { FlexModule } from '@angular/flex-layout/flex';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductListComponent } from './product-list.component';
 import { RouterLink } from '@angular/router';
 
@@ -19,9 +20,10 @@ import { RouterLink } from '@angular/router';
     MatButtonToggleModule,
     MatButtonModule,
     MatGridListModule,
+    MatProgressSpinnerModule
   ],
   declarations: [ProductListComponent],
   providers: [],
   exports: [ProductListComponent],
 })
-export class ProductListComponentModule {}
+export class ProductListComponentModule { }
