@@ -1,0 +1,21 @@
+<mat-card
+  ><mat-card-title>Crypto Chips</mat-card-title>
+  <mat-card-content *ngIf="crypto$ | async as crypto; else loading">
+    <ng-container *ngIf="crypto.length > 0; else emptyState">
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip *ngFor="let item of crypto$ | async">
+          {{ item.symbol }}
+        </mat-chip>
+      </mat-chip-list>
+    </ng-container>
+  </mat-card-content>
+  <ng-template #emptyState> Ooops! There is not data. </ng-template>
+  <ng-template #loading>
+    <mat-progress-spinner
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+      [value]="50"
+    >
+    </mat-progress-spinner>
+  </ng-template>
+</mat-card>
