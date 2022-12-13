@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-content>
+    <mat-form-field
+      appearance="fill"
+      *ngIf="publicHolidays$ | async as publicHolidays; else loading"
+    >
+      <ng-container *ngIf="publicHolidays.length > 0; else emptyState">
+        <mat-label>Choose an option</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let item of publicHolidays$ | async"
+            [value]="item"
+          >
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
+      </ng-container>
+      <ng-template #emptyState>Oops! There is no data!</ng-template>
+    </mat-form-field>
+    <ng-template #loading>
+      <mat-progress-bar
+        class="example-margin"
+        [color]="'primary'"
+        [mode]="'indeterminate'"
+        [value]="50"
+      >
+      </mat-progress-bar>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
