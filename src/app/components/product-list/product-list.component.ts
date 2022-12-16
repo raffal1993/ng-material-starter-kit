@@ -3,10 +3,10 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, map, Observable, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
+import { ProductModel } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -15,22 +15,49 @@ import { ProductsService } from '../../services/products.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListComponent {
+  private _selectedProductDetailsSubject: Subject<{
+    id: number;
+    category: string;
+  }> = new Subject<{ id: number; category: string }>();
+
+  public selectedProductDetails$: Observable<{
+    id: number;
+    category: string;
+  }> = this._selectedProductDetailsSubject.asObservable();
+
   constructor(private _productsService: ProductsService) {}
-
-  private _selectedProductIdSubject: Subject<number> = new Subject<number>();
-
-  public selectedProductId$: Observable<number> =
-    this._selectedProductIdSubject.asObservable();
-
-  readonly productDetails$: Observable<ProductModel> =
-    this.selectedProductId$.pipe(
-      switchMap((id) => this._productsService.getOne(id))
-    );
-
-  selectProduct(id: number) {
-    this._selectedProductIdSubject.next(id);
-  }
 
   readonly products$: Observable<ProductModel[]> =
     this._productsService.getAll();
+
+  readonly productDetails$: Observable<ProductModel | null> =
+    this._selectedProductDetailsSubject.pipe(
+      switchMap((details) => this._productsService.getOne(details.id))
+    );
+
+  /* readonly categoriesByProduct$: Observable<ProductModel[] | null> =
+    this._selectedProductDetailsSubject.pipe(
+      switchMap((details) =>
+        this.products$.pipe(
+          map((products) =>
+            products.filter((prod) => prod.category === details.category)
+          )
+        )
+      )
+    );*/
+
+  readonly categoriesByProduct$: Observable<string[] | null> = combineLatest([
+    this.products$,
+    this.selectedProductDetails$,
+  ]).pipe(
+    map(([products, details]) =>
+      products
+        .filter((prod) => prod.category === details.category)
+        .map((prod) => prod.title)
+    )
+  );
+
+  selectProduct(id: number, category: string) {
+    this._selectedProductDetailsSubject.next({ id, category });
+  }
 }

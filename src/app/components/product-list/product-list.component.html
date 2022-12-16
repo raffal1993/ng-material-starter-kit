@@ -1,9 +1,13 @@
-<mat-grid-list cols="2" rowHeight="1:1">
+<mat-grid-list cols="3" rowHeight="1:1">
   <mat-grid-tile>
     <mat-list role="list">
       <mat-list-item role="listitem" *ngFor="let item of products$ | async">
         {{ item.title }}
-        <button mat-button color="primary" (click)="selectProduct(item.id)">
+        <button
+          mat-button
+          color="primary"
+          (click)="selectProduct(item.id, item.category)"
+        >
           Show details
         </button>
       </mat-list-item>
@@ -12,5 +16,16 @@
   <mat-grid-tile *ngIf="productDetails$ | async as productDetails">
     {{ productDetails.title }} <br />
     {{ productDetails.price }}$
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-list role="list">
+      <mat-list-item
+        role="listitem"
+        *ngFor="let category of categoriesByProduct$ | async"
+      >
+        {{ category }}
+      </mat-list-item>
+    </mat-list>
   </mat-grid-tile>
 </mat-grid-list>
