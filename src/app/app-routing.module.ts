@@ -1,34 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './components/products/products.component';
-import { UniversitiesComponent } from './components/universities/universities.component';
-import { CryptoComponent } from './components/crypto/crypto.component';
-import { BeersComponent } from './components/beers/beers.component';
+import { JobsComponent } from './components/jobs/jobs.component';
+import { ProductsByCategoryComponent } from './components/products-by-category/products-by-category.component';
+import { CarsComponent } from './components/cars/cars.component';
 import { ProductsComponentModule } from './components/products/products.component-module';
-import { ProductsServiceModule } from './services/products.service-module';
-import { UniversitiesComponentModule } from './components/universities/universities.component-module';
-import { UniversitiesServiceModule } from './services/universities.service-module';
-import { CryptoComponentModule } from './components/crypto/crypto.component-module';
-import { CryptoServiceModule } from './services/crypto.service-module';
-import { BeersComponentModule } from './components/beers/beers.component-module';
-import { BeersServiceModule } from './services/beers.service-module';
+import { JobsComponentModule } from './components/jobs/jobs.component-module';
+import { ProductsByCategoryComponentModule } from './components/products-by-category/products-by-category.component-module';
+import { CarsComponentModule } from './components/cars/cars.component-module';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: 'products', component: ProductsComponent },
-      { path: 'universities', component: UniversitiesComponent },
-      { path: 'crypto-autocomplete', component: CryptoComponent },
-      { path: 'beers', component: BeersComponent },
+      {
+        path: 'list-2-route-sort-single-products-backend',
+        component: ProductsComponent,
+      },
+      { path: 'search-route-multi-jobs', component: JobsComponent },
+      { path: 'products', component: ProductsByCategoryComponent },
+      {
+        path: 'list-2-route-filter-multi-cars-frontend',
+        component: CarsComponent,
+      },
     ]),
     ProductsComponentModule,
-    ProductsServiceModule,
-    UniversitiesComponentModule,
-    UniversitiesServiceModule,
-    CryptoComponentModule,
-    CryptoServiceModule,
-    BeersComponentModule,
-    BeersServiceModule,
+    JobsComponentModule,
+    ProductsByCategoryComponentModule,
+    CarsComponentModule,
   ],
   exports: [RouterModule],
 })

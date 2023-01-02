@@ -3,15 +3,8 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import {
-  BehaviorSubject,
-  combineLatest,
-  debounceTime,
-  map,
-  Observable,
-  switchMap,
-} from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -22,44 +15,36 @@ import { ProductsService } from '../../services/products.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsComponent {
-  constructor(private _productsService: ProductsService) {}
+  readonly sort$: Observable<string | undefined> =
+    this._activatedRoute.queryParams.pipe(map((params) => params['sort']));
 
-  readonly search: FormGroup = new FormGroup({ title: new FormControl() });
+  readonly sortedProducts$: Observable<ProductModel[]> = this.sort$.pipe(
+    switchMap((sort) => this._productsService.getSortedProducts(sort))
+  );
 
-  private _startsWidthSubject: BehaviorSubject<string> =
-    new BehaviorSubject<string>('');
+  //---
+  // FE-method
+  //---
 
-  public startsWidth$: Observable<string> =
-    this._startsWidthSubject.asObservable();
+  //   readonly sortedProducts$: Observable<ProductModel[]> = combineLatest([
+  //     this._productsService.getAll(),
+  //     this.sort$,
+  //   ]).pipe(
+  //     map(([products, sort]) => {
+  //       if (!sort) return products;
+  //       return products.sort((a, b) => {
 
-  /*  readonly products$: Observable<ProductModel[]> = combineLatest([
-    this._productsService.getAll(),
-    this.startsWidth$,
-  ]).pipe(
-    map(([products, startsWidth]) => {
-      if (!startsWidth) return [];
-      return products.filter((product) =>
-        product.title.startsWith(startsWidth as string)
-      );
-    })
-  );*/
+  //         if (sort === 'asc' && a.id < b.id) return -1;
+  //         if (sort === 'desc' && a.id > b.id) return -1;
+  //         return 0;
+  //       });
+  //     })
+  //   );
 
-  readonly startsWidthChanges$: Observable<string> =
-    this.search.valueChanges.pipe(map((form) => form.title));
+  public sortOptions$: Observable<string[]> = of(['asc', 'desc']);
 
-  readonly products$: Observable<ProductModel[]> =
-    this.startsWidthChanges$.pipe(
-      debounceTime(1000),
-      switchMap((startsWith) =>
-        this._productsService.getAllWithSearch(startsWith)
-      )
-    );
-
-  onSearchSubmitted(search: FormGroup): void {
-    /* this._startsWidthSubject.next(search.get('title')?.value);*/
-  }
-
-  onInputChange(eventValue: string): void {
-    this._startsWidthSubject.next(eventValue);
-  }
+  constructor(
+    private _productsService: ProductsService,
+    private _activatedRoute: ActivatedRoute
+  ) {}
 }

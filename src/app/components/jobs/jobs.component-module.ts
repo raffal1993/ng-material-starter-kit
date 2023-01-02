@@ -1,12 +1,12 @@
+import { MatCardModule } from '@angular/material/card';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatListModule } from '@angular/material/list';
-import { BeersComponent } from './beers.component';
+import { MatTableModule } from '@angular/material/table';
+import { JobsComponent } from './jobs.component';
 
 @NgModule({
   imports: [
@@ -15,11 +15,11 @@ import { BeersComponent } from './beers.component';
     MatInputModule,
     CommonModule,
     MatButtonModule,
-    MatRadioModule,
-    MatListModule
+    MatTableModule,
+    MatCardModule,
   ],
-  declarations: [BeersComponent],
+  declarations: [JobsComponent],
   providers: [],
-  exports: [BeersComponent],
+  exports: [JobsComponent],
 })
-export class BeersComponentModule { }
+export class JobsComponentModule {}

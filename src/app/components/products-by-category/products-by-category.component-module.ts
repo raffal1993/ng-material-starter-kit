@@ -1,29 +1,28 @@
+import { Router, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { FlexModule } from '@angular/flex-layout/flex';
-import { MatChipsModule } from '@angular/material/chips';
-import { ProductsComponent } from './products.component';
+import { ProductsByCategoryComponent } from './products-by-category.component';
 
 @NgModule({
   imports: [
     MatCardModule,
-    CommonModule,
+    MatListModule,
+    RouterModule,
     MatFormFieldModule,
     MatSelectModule,
     MatOptionModule,
+    CommonModule,
     MatListModule,
     FlexModule,
-    RouterModule,
-    MatChipsModule
   ],
-  declarations: [ProductsComponent],
+  declarations: [ProductsByCategoryComponent],
   providers: [],
-  exports: [ProductsComponent],
+  exports: [ProductsByCategoryComponent],
 })
-export class ProductsComponentModule { }
+export class ProductsByCategoryComponentModule {}
