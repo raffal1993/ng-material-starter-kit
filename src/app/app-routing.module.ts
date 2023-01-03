@@ -17,7 +17,13 @@ import { CarsComponentModule } from './components/cars/cars.component-module';
         component: ProductsComponent,
       },
       { path: 'search-route-multi-jobs', component: JobsComponent },
-      { path: 'products', component: ProductsByCategoryComponent },
+      {
+        path: 'products',
+        component: ProductsByCategoryComponent,
+        children: [
+          { path: ':category', component: ProductsByCategoryComponent },
+        ],
+      },
       {
         path: 'list-2-route-filter-multi-cars-frontend',
         component: CarsComponent,
