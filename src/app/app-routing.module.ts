@@ -27,7 +27,7 @@ import { JokeServiceModule } from './services/joke.service-module';
       { path: 'age/:name', component: AgePredictionComponent },
       { path: 'cart/:id', component: CartComponent },
       { path: 'user/:id', component: UserComponent },
-      { path: 'joke', component: JokeComponent }
+      { path: 'joke', component: JokeComponent },
     ]),
     ProductComponentModule,
     ProductServiceModule,
@@ -40,9 +40,11 @@ import { JokeServiceModule } from './services/joke.service-module';
     UserComponentModule,
     UserServiceModule,
     JokeComponentModule,
-    JokeServiceModule
+    JokeServiceModule,
   ],
   exports: [RouterModule],
 })
 // @ts-ignore
-export class AppRoutingModule { }
+export class AppRoutingModule {}
+
+//fddsf
