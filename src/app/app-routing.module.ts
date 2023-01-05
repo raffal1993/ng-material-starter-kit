@@ -20,9 +20,10 @@ import { CarsComponentModule } from './components/cars/cars.component-module';
       {
         path: 'products',
         component: ProductsByCategoryComponent,
-        children: [
-          { path: ':category', component: ProductsByCategoryComponent },
-        ],
+      },
+      {
+        path: 'products/:category',
+        component: ProductsByCategoryComponent,
       },
       {
         path: 'list-2-route-filter-multi-cars-frontend',
