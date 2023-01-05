@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,19 +14,18 @@ import { MatSelectionListChange } from '@angular/material/list';
   styleUrls: ['cars.component.css'],
 })
 export class CarsComponent {
-  readonly carBrands$: Observable<CarBrand[]> =
-    this._carsService.getCarBrands();
+  readonly carBrands$: Observable<CarBrand[]> = this._carsService.getCarBrands();
 
   readonly carComfortFeatures$: Observable<CarComfortFeature[]> =
     this._carsService.getCarComfortFeature();
 
-  readonly brandsParam$: Observable<string | null> =
-    this._activatedRoute.queryParams.pipe(map((params) => params['brands']));
+  readonly brandsParam$: Observable<string> = this._activatedRoute.queryParams.pipe(
+    map((params) => params['brands'] || '')
+  );
 
-  readonly comfortFeaturesParam$: Observable<string | null> =
-    this._activatedRoute.queryParams.pipe(
-      map((params) => params['comfort-features'])
-    );
+  readonly comfortFeaturesParam$: Observable<string> = this._activatedRoute.queryParams.pipe(
+    map((params) => params['comfort-features'] || '')
+  );
 
   readonly cars$: Observable<Car[]> = combineLatest([
     this._carsService.getCars(),
@@ -41,22 +36,15 @@ export class CarsComponent {
       if (!brandsParams && !cFeaturesParams) return cars;
 
       const filteredCars = cars.filter(({ brandId, comfortFeatureIds }) => {
-        const hasBrand =
-          brandsParams &&
-          brandsParams.split(',').some((brand) => brand === brandId);
+        const hasBrand = brandsParams.split(',').some((brand) => brand === brandId);
 
         const hasComfortFeature =
           comfortFeatureIds &&
           comfortFeatureIds.some(
             (cFeatureId) =>
-              cFeatureId &&
-              cFeaturesParams &&
-              cFeaturesParams
-                .split(',')
-                .some((cFeature) => cFeature === cFeatureId)
+              cFeatureId && cFeaturesParams.split(',').some((cFeature) => cFeature === cFeatureId)
           );
-        if (brandsParams && cFeaturesParams)
-          return hasBrand && hasComfortFeature;
+        if (brandsParams && cFeaturesParams) return hasBrand && hasComfortFeature;
         return hasBrand || hasComfortFeature;
       });
 
@@ -74,10 +62,7 @@ export class CarsComponent {
     const brands = event.source._value as CarBrand[] | null;
     this._router.navigate([], {
       queryParams: {
-        brands:
-          brands && brands.length > 0
-            ? brands.map((brand) => brand.id).join(',')
-            : null,
+        brands: brands && brands.length > 0 ? brands.map((brand) => brand.id).join(',') : null,
       },
       queryParamsHandling: 'merge',
     });
@@ -89,9 +74,7 @@ export class CarsComponent {
       queryParams: {
         'comfort-features':
           comfortFeatures && comfortFeatures.length > 0
-            ? comfortFeatures
-                .map((comfortFeature) => comfortFeature.id)
-                .join(',')
+            ? comfortFeatures.map((comfortFeature) => comfortFeature.id).join(',')
             : null,
       },
       queryParamsHandling: 'merge',

@@ -1,3 +1,5 @@
+<!-- SELECTED -->
+
 <mat-card
   ><mat-card-title>Filtered Cars</mat-card-title
   ><mat-card-content>
@@ -5,28 +7,20 @@
     <mat-selection-list
       role="list"
       [ngClass]="'mat-list'"
-      (selectionChange)="onSelectBrand($event)"
+      (selectionChange)="onBrandChanged(item, !!$event)"
+      *ngFor="let item of carBrands$ | async"
     >
-      <mat-list-option
-        [selected]="(brandsParam$ | async)?.includes(item.id)"
-        *ngFor="let item of carBrands$ | async"
-        [value]="item"
-        role="listitem"
-        >{{ item.name }}</mat-list-option
-      >
+      <mat-list-option [value]="item" role="listitem">{{ item.name }}</mat-list-option>
     </mat-selection-list>
     <h2 [ngClass]="'mat-title'">Comfort Features</h2>
     <mat-selection-list
       role="list"
       [ngClass]="'mat-list'"
-      (selectionChange)="onSelectComfortFeature($event)"
-      ><mat-list-option
-        [selected]="(comfortFeaturesParam$ | async)?.includes(item.id)"
-        [value]="item"
-        role="listitem"
-        *ngFor="let item of carComfortFeatures$ | async"
-        >{{ item.name }}</mat-list-option
-      ></mat-selection-list
+      *ngFor="let item of comfortFeatures$ | async"
+      (selectionChange)="onComfortFeatureChanged(item, !!$event)"
+      ><mat-list-option [value]="item" role="listitem">{{
+        item.name
+      }}</mat-list-option></mat-selection-list
     >
     <ng-container *ngIf="cars$ | async as list">
       <table mat-table [dataSource]="list" class="mat-elevation-z8">
