@@ -37,30 +37,38 @@ export class CarsComponent {
     this.brandsParam$,
     this.comfortFeaturesParam$,
   ]).pipe(
-    map(([cars, brands, comfortFeatures]) => {
-      if (!brands && !comfortFeatures) return cars;
+    map(([cars, brandsParams, cFeaturesParams]) => {
+      if (!brandsParams && !cFeaturesParams) return cars;
 
-      const filteredCars = cars.filter((car) => {
+      const filteredCars = cars.filter(({ brandId, comfortFeatureIds }) => {
         const hasBrand =
-          brands && brands.split(',').some((brand) => brand === car.brandId);
+          brandsParams &&
+          brandsParams.split(',').some((brand) => brand === brandId);
 
         const hasComfortFeature =
-          car.comfortFeatureIds &&
-          car.comfortFeatureIds.some(
+          comfortFeatureIds &&
+          comfortFeatureIds.some(
             (cFeatureId) =>
               cFeatureId &&
-              comfortFeatures &&
-              comfortFeatures
+              cFeaturesParams &&
+              cFeaturesParams
                 .split(',')
                 .some((cFeature) => cFeature === cFeatureId)
           );
-        if (brands && comfortFeatures) return hasBrand && hasComfortFeature;
+        if (brandsParams && cFeaturesParams)
+          return hasBrand && hasComfortFeature;
         return hasBrand || hasComfortFeature;
       });
 
       return filteredCars;
     })
   );
+
+  constructor(
+    private _carsService: CarsService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
+  ) {}
 
   onSelectBrand(event: MatSelectionListChange): void {
     const brands = event.source._value as CarBrand[] | null;
@@ -89,10 +97,4 @@ export class CarsComponent {
       queryParamsHandling: 'merge',
     });
   }
-
-  constructor(
-    private _carsService: CarsService,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute
-  ) {}
 }
