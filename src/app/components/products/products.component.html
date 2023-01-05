@@ -24,7 +24,7 @@
           [queryParams]="{ limit: item }"
           [disabled]="item == (limitParams$ | async)"
           value="{{ item }}"
-          (click)="onClickMenuItem(item)"
+          (click)="buttonForm.setValue(item)"
           *ngFor="let item of buttonOptions$ | async"
         >
           {{ item }}

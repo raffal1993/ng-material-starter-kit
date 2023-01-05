@@ -19,17 +19,6 @@ const DEFAULT_LIMIT_PARAM = 5;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsComponent {
-  ngOnInit(): void {
-    this.limitParams$.subscribe((params) => {
-      params === undefined &&
-        this._router.navigate([], {
-          queryParams: {
-            limit: DEFAULT_LIMIT_PARAM,
-          },
-        });
-    });
-  }
-
   public buttonOptions$: Observable<number[]> = of([5, 10, 15]);
 
   public buttonForm: FormControl = new FormControl(DEFAULT_LIMIT_PARAM);
@@ -41,13 +30,20 @@ export class ProductsComponent {
     switchMap((params) => this._productsService.getLimitedProducts(params))
   );
 
-  onClickMenuItem(item: any): void {
-    this.buttonForm.setValue(item);
-  }
-
   constructor(
     private _productsService: ProductsService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.limitParams$.subscribe((params) => {
+      params === undefined &&
+        this._router.navigate([], {
+          queryParams: {
+            limit: DEFAULT_LIMIT_PARAM,
+          },
+        });
+    });
+  }
 }
