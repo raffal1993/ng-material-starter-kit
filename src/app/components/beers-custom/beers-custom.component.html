@@ -1,0 +1,32 @@
+<mat-card
+  ><mat-card-title>Custom Pagination with Beers</mat-card-title
+  ><mat-card-content
+    ><form [formGroup]="optionsForm">
+      <mat-label>Choose a limit</mat-label>
+      <div>
+        <mat-button-toggle-group formControlName="perPage">
+          <mat-button-toggle [value]="item" *ngFor="let item of perPageOptions$ | async">{{
+            item
+          }}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div>
+        <mat-label>Choose a page</mat-label>
+        <div>
+          <mat-radio-group formControlName="page">
+            <mat-radio-button [value]="item" *ngFor="let item of pageOptions$ | async">{{
+              item
+            }}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </form>
+    <br />
+    <mat-card-title>Beer list</mat-card-title>
+    <mat-list role="list"
+      ><mat-list-item role="listitem" *ngFor="let item of beers$ | async"
+        >{{ item.id }}: {{ item.name }}</mat-list-item
+      ></mat-list
+    >
+  </mat-card-content></mat-card
+>
