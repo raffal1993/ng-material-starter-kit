@@ -1,0 +1,22 @@
+<mat-accordion>
+  <!-- 1 -->
+  <mat-expansion-panel *ngFor="let organization of organizations$ | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Show {{ organization.name }} teams: </mat-panel-title>
+    </mat-expansion-panel-header>
+    <!-- 2 -->
+    <mat-expansion-panel *ngFor="let team of organization.teams">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Show {{ team.name }} members: </mat-panel-title>
+      </mat-expansion-panel-header>
+      <!-- 3 -->
+      <ng-container *ngFor="let image of team.images">
+        <img [src]="image" />
+        <br />
+      </ng-container>
+      <!-- 3 -->
+    </mat-expansion-panel>
+    <!-- 2 -->
+  </mat-expansion-panel>
+  <!-- 1 -->
+</mat-accordion>
