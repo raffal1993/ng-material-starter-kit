@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { map, Observable, shareReplay, take } from 'rxjs';
-import { ProductQueryModel } from 'src/app/query-models/product';
+import { ProductQueryModel } from 'src/app/query-models/product.query-model';
 import { ProductsService } from '../../services/products.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { combineLatest, forkJoin, map, Observable, shareReplay, switchMap } from 'rxjs';
 import { OrganizationTeamsModel, OrganizationUsersModel } from 'src/app/models/organization.model';
-import { OrganizationQueryModel } from 'src/app/query-models/organization';
+import { OrganizationQueryModel } from 'src/app/query-models/organization.query-model';
 import { OrganizationsService } from '../../services/organizations.service';
 
 @Component({
