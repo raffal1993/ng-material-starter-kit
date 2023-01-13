@@ -3,7 +3,7 @@ export interface OrganizationQueryModel {
   teams: Teams[];
 }
 
-export interface Teams {
+interface Teams {
   name: string;
   images: string[];
 }

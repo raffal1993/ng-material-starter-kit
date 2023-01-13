@@ -29,7 +29,6 @@ export class ProductsService {
   //         `https://636ce2d8ab4814f2b2712854.mockapi.io/products/${product.id}/product-metadata`
   //       )
   //       .pipe(
-  //         tap((data) => console.log(data[0].stock)),
   //         map((prod) => ({
   //           name: product.name,
   //           price: product.price,

@@ -33,13 +33,14 @@ export class OrganizationsComponent {
   constructor(private _organizationsService: OrganizationsService) {}
 
   private _getTeams(teams: OrganizationTeamsModel[], users: OrganizationUsersModel[]) {
+    const usersMap = users.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {}) as Record<
+      string,
+      OrganizationUsersModel
+    >;
+
     return teams.map((team) => ({
       name: team.name,
-      images: this._getImages(team.userIds, users),
+      images: (team.userIds ?? []).map((id) => usersMap[id].avatar),
     }));
-  }
-
-  private _getImages(userIds: string[], users: OrganizationUsersModel[]): string[] {
-    return userIds.map((id) => users.find((user) => user.id === id)?.avatar || '');
   }
 }
