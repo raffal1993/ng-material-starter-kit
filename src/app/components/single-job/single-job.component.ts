@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, map, Observable, take } from 'rxjs';
+import { JobPostModel } from 'src/app/models/job-post.model';
 import { JobTagModel } from 'src/app/models/job-tag.model';
 import { SingleJobQueryModel } from 'src/app/queryModels/singleJob';
 import { JobPostsService } from '../../services/job-posts.service';
@@ -17,11 +18,12 @@ export class SingleJobComponent {
     this._jobTagsService.getAll(),
   ]).pipe(
     map(([jobPosts, jobTags]) =>
-      jobPosts.map((JP) => ({
-        title: JP.title,
-        description: JP.description,
-        jobTagNames: this._getJobTags(JP.jobTagIds, jobTags),
-      }))
+      // jobPosts.map((JP) => ({
+      //   title: JP.title,
+      //   description: JP.description,
+      //   jobTagNames: this._getJobTags(JP.jobTagIds, jobTags),
+      // }))
+      this._getJobTags2(jobPosts, jobTags)
     )
   );
 
@@ -32,5 +34,22 @@ export class SingleJobComponent {
       const newJobTag = jobTags.find((JT) => JT.id.toString() === curr.toString())?.name || '';
       return [...acc, newJobTag];
     }, []);
+  }
+
+  private _getJobTags2(jobPosts: JobPostModel[], jobTags: JobTagModel[]): SingleJobQueryModel[] {
+    const tagMap = jobTags.reduce((acc, curr) => ({ ...acc, [curr.id]: curr }), {}) as Record<
+      string,
+      JobTagModel
+    >;
+
+    return jobPosts.map((job) => ({
+      title: job.title,
+      description: job.description,
+      jobTagNames: (job.jobTagIds ?? []).map((id) => tagMap[id]?.name),
+    }));
+  }
+
+  ngOnInit(): void {
+    this.jobs$.pipe(take(1)).subscribe((data) => console.log(data));
   }
 }
