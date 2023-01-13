@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { combineLatest, forkJoin, map, Observable, shareReplay, switchMap, take } from 'rxjs';
+import { combineLatest, forkJoin, map, Observable, shareReplay, switchMap } from 'rxjs';
 import { OrganizationTeamsModel, OrganizationUsersModel } from 'src/app/models/organization.model';
-import { OrganizationQueryModel, Teams } from 'src/app/query-models/organization';
+import { OrganizationQueryModel } from 'src/app/query-models/organization';
 import { OrganizationsService } from '../../services/organizations.service';
 
 @Component({
@@ -41,9 +41,5 @@ export class OrganizationsComponent {
 
   private _getImages(userIds: string[], users: OrganizationUsersModel[]): string[] {
     return userIds.map((id) => users.find((user) => user.id === id)?.avatar || '');
-  }
-
-  ngOnInit(): void {
-    this.organizations$.pipe(take(1)).subscribe((data) => console.log(data));
   }
 }
