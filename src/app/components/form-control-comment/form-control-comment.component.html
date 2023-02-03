@@ -1,0 +1,5 @@
+<mat-form-field appearance="fill">
+  <mat-label>Write your comment...</mat-label>
+  <textarea matInput [formControl]="comment" required></textarea>
+  <mat-error *ngIf="!comment.valid">Comment needs to have minimum of 4 words</mat-error>
+</mat-form-field>

@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+  <mat-label>Email</mat-label>
+  <input matInput required type="email" [formControl]="email" />
+  <mat-error *ngIf="!email.valid">Email is invalid</mat-error>
+</mat-form-field>
+<ng-container *ngIf="emailValue$ | async as emailValue">{{ emailValue }}</ng-container>

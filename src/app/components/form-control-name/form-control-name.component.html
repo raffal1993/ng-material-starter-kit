@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+  <mat-label>Name</mat-label>
+  <input matInput type="text" [formControl]="name" />
+  <mat-error *ngIf="!name.valid">Name is invalid</mat-error>
+</mat-form-field>
+<ng-container *ngIf="nameValue$ | async as nameValue">{{ nameValue }}</ng-container>

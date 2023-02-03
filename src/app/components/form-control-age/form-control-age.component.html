@@ -1,0 +1,6 @@
+<mat-form-field appearance="fill">
+  <mat-label>What is your age?</mat-label>
+  <input matInput required type="number" [formControl]="age" />
+  <mat-error *ngIf="!age.valid">You are under age :(</mat-error>
+</mat-form-field>
+<ng-container *ngIf="ageValue$ | async as ageValue">{{ ageValue }}</ng-container>
