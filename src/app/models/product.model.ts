@@ -12,3 +12,9 @@ export interface ProductMetadataModel {
   id: string;
   productId: string;
 }
+
+export interface ProductFinalModel {
+  name: string;
+  price: number;
+  stock: number;
+}
