@@ -1,0 +1,49 @@
+<mat-card [ngStyle]="{ height: '95%', backgroundColor: '#EFEEEF', display: 'flex' }">
+  <mat-tab-group
+    [ngStyle]="{
+      height: '40%',
+      width: '20%',
+      margin: 'auto',
+      backgroundColor: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '30px'
+    }"
+  >
+    <mat-tab label="Login"
+      ><form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmitted(loginForm)">
+        <h1 [ngStyle]="{ fontWeight: 'bold' }">Login</h1>
+        <div>
+          <mat-form-field appearance="fill"
+            ><mat-label>Email</mat-label
+            ><input
+              matInput
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+              required
+            /><mat-error *ngIf="!loginForm.get('email')!.valid"
+              >email is invalid</mat-error
+            ></mat-form-field
+          >
+        </div>
+        <div>
+          <mat-form-field appearance="fill"
+            ><mat-label>Password</mat-label
+            ><input
+              matInput
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+              required
+            /><mat-error *ngIf="!loginForm.get('password')!.valid"
+              >password is invalid</mat-error
+            ></mat-form-field
+          >
+        </div>
+        <div><button type="submit" mat-raised-button color="primary">Login</button></div>
+      </form></mat-tab
+    >
+    <mat-tab label="Register"></mat-tab>
+  </mat-tab-group>
+</mat-card>
