@@ -44,7 +44,7 @@ const customPasswordValidator: ValidatorFn = (
 
   if (!value) return null;
 
-  const hasMinimumChars = /[0-9a-zA-Z]{6,}/.test(value);
+  const hasMinimumChars = /[0-9a-zA-Z!@#$%^\*\(\)]{6,}/.test(value);
   const hasNumber = /[0-9]/.test(value);
   const hasSpecialChar = /[!@#$%^\*\(\)]/.test(value);
   const hasCapitalChar = /[A-Z]/.test(value);
@@ -73,17 +73,6 @@ const customPasswordValidator: ValidatorFn = (
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterValidationComponent {
-  readonly registerForm: FormGroup = new FormGroup(
-    {
-      email: new FormControl('', [
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        Validators.required,
-      ]),
-      password: new FormControl('', [Validators.required, customPasswordValidator]),
-      repeatPassword: new FormControl('', [Validators.required]),
-    },
-    { validators: customCrossFieldValidator }
-  );
   readonly dateOfBirthForm: FormGroup = new FormGroup(
     {
       day: new FormControl('', [Validators.min(1), Validators.max(31)]),
@@ -94,5 +83,17 @@ export class RegisterValidationComponent {
       ]),
     },
     { validators: customDateOfBirthValidation }
+  );
+  readonly registerForm: FormGroup = new FormGroup(
+    {
+      email: new FormControl('', [
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        Validators.required,
+      ]),
+      password: new FormControl('', [Validators.required, customPasswordValidator]),
+      repeatPassword: new FormControl('', [Validators.required]),
+      dateOfBirthForm: this.dateOfBirthForm,
+    },
+    { validators: customCrossFieldValidator }
   );
 }
