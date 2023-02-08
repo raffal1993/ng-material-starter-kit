@@ -1,0 +1,11 @@
+<mat-card
+  ><mat-card-content *ngIf="userId$ | async as userId; else idNotFound">
+    <h2>Your userId is : {{ userId }}</h2>
+    <h2>You can also <button (click)="logout()" mat-raised-button>Logout</button></h2>
+  </mat-card-content>
+  <ng-template #idNotFound>
+    <mat-card-content>
+      <h2>You should log in first <a [routerLink]="'../login'">here</a></h2>
+    </mat-card-content>
+  </ng-template>
+</mat-card>
