@@ -1,0 +1,5 @@
+<mat-card *ngIf="data | async as data"
+  >Yay! you are logged in! your id is: {{ data | json }}
+  <button (click)="logout()" mat-raised-button color="primary">LOGOUT</button>
+  <mat-card-content></mat-card-content
+></mat-card>

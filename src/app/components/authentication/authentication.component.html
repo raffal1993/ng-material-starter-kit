@@ -1,0 +1,112 @@
+<mat-card [ngStyle]="{ height: '95%', backgroundColor: '#EFEEEF', display: 'flex' }"
+  ><mat-card-content
+    [ngStyle]="{
+      height: '90%',
+      width: '30%',
+      margin: 'auto',
+      backgroundColor: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '30px'
+    }"
+    ><mat-tab-group
+      [ngStyle]="{
+        height: '100%',
+        width: '100%',
+        marginTop: '40px',
+        display: 'flex',
+        alignItems: 'center'
+      }"
+    >
+      <mat-tab label="Login"
+        ><form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmitted(loginForm)">
+          <h2 [className]="'title'">Login</h2>
+          <div>
+            <mat-form-field appearance="fill"
+              ><mat-label>Email</mat-label
+              ><input
+                matInput
+                type="email"
+                placeholder="Email"
+                formControlName="email"
+                required
+              /><mat-error *ngIf="loginForm.get('email')!.invalid"
+                >email is invalid</mat-error
+              ></mat-form-field
+            >
+          </div>
+          <div>
+            <mat-form-field appearance="fill"
+              ><mat-label>Password</mat-label
+              ><input
+                matInput
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+                required
+              /><mat-error *ngIf="loginForm.get('password')!.invalid"
+                >password is invalid</mat-error
+              ></mat-form-field
+            >
+            <mat-error *ngIf="loginForm.errors as errors">{{ errors }}</mat-error>
+          </div>
+          <div><button type="submit" mat-raised-button color="primary">Login</button></div>
+        </form></mat-tab
+      >
+      <mat-tab label="Register">
+        <form [formGroup]="registerForm">
+          <h2 [className]="'title'">Register</h2>
+          <div>
+            <mat-form-field appearance="fill"
+              ><mat-label>Email</mat-label
+              ><input
+                matInput
+                type="email"
+                placeholder="Email"
+                formControlName="email"
+                required
+              /><mat-error *ngIf="registerForm.get('email')!.invalid"
+                >email is invalid</mat-error
+              ></mat-form-field
+            >
+          </div>
+          <div>
+            <mat-form-field appearance="fill"
+              ><mat-label>Password</mat-label
+              ><input
+                matInput
+                type="password"
+                placeholder="Password"
+                formControlName="password"
+                required
+              /><mat-error
+                *ngIf="
+                  registerForm.get('password')!.getError('customPasswordValidator')
+                    | errorPassword as errorPassword
+                "
+                >{{ errorPassword }}</mat-error
+              ></mat-form-field
+            >
+          </div>
+          <div>
+            <mat-form-field appearance="fill"
+              ><mat-label>Confirm Password</mat-label
+              ><input
+                matInput
+                type="password"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+                required
+              />
+              <mat-error
+                *ngIf="registerForm.get('confirmPassword')?.errors?.['customCrossFieldValidator']"
+                >Passwords do not match</mat-error
+              ></mat-form-field
+            >
+          </div>
+          <div><button type="submit" mat-raised-button color="primary">Submit</button></div>
+        </form></mat-tab
+      >
+    </mat-tab-group></mat-card-content
+  ></mat-card
+>
