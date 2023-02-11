@@ -1,0 +1,21 @@
+<mat-card *ngIf="user$ | async as user; else noUser"
+  ><mat-card-title>You are logged in as:</mat-card-title
+  ><mat-card-content>
+    <table mat-table #table [dataSource]="user">
+      <ng-container matColumnDef="key">
+        <th mat-header-cell *matHeaderCellDef>key</th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}:</td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef>value</th>
+        <td mat-cell *matCellDef="let user">{{ user.value }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['key', 'value']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['key', 'value']"></tr>
+    </table>
+    <button (click)="logout()" mat-raised-button>Log out</button></mat-card-content
+  >
+</mat-card>
+<ng-template #noUser><h2>User is not logged in !</h2></ng-template>
