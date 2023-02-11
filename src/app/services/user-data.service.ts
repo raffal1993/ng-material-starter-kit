@@ -4,7 +4,7 @@ import { LoginAPISuccessModel } from '../models/loginAPI.model';
 
 @Injectable({ providedIn: 'root' })
 export class UserDataService {
-  public userDataSubject: BehaviorSubject<LoginAPISuccessModel | null> =
+  readonly userDataSubject: BehaviorSubject<LoginAPISuccessModel | null> =
     new BehaviorSubject<LoginAPISuccessModel | null>(null);
 
   loginUser(userData: LoginAPISuccessModel) {
