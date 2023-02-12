@@ -32,9 +32,9 @@ export class AuthPersistentComponent {
     const password = loginForm.get('password')?.value;
 
     this._authService.login({ email, password }).subscribe({
-      next: (d) => {
-        this._authService.setAuthToken(d.data.accessToken);
+      next: (data) => {
         this._router.navigate(['../logged-in'], { relativeTo: this._activatedRoute });
+        this._authService.setAuthToken(data.accessToken);
       },
       error: (e) => {
         if (e.hasOwnProperty('error') && e.error.hasOwnProperty('message')) {

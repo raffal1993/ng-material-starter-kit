@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { CookieHandlerService } from './services/cookie-handler.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,11 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    //     { provide: Storage, useValue: localStorage }, // <<--- using LOCAL STORAGE
+    { provide: Storage, useClass: CookieHandlerService }, // <<--- using COOKIES
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
