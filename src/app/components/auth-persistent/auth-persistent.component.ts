@@ -31,10 +31,11 @@ export class AuthPersistentComponent {
     const email = loginForm.get('email')?.value;
     const password = loginForm.get('password')?.value;
 
+    if (!loginForm.valid) return;
+
     this._authService.login({ email, password }).subscribe({
-      next: (data) => {
+      next: () => {
         this._router.navigate(['../logged-in'], { relativeTo: this._activatedRoute });
-        this._authService.setAuthToken(data.accessToken);
       },
       error: (e) => {
         if (e.hasOwnProperty('error') && e.error.hasOwnProperty('message')) {
