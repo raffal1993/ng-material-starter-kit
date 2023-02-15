@@ -1,0 +1,18 @@
+<mat-card>
+  <ng-container *ngIf="userID$ | async as userID; else noUserLoggedIn">
+    <ng-container *ngIf="userDetails$ | async as userDetails; else noUserLoggedIn">
+      <mat-card-content *ngIf="userID && userDetails">
+        <p>Your userID is: {{ userID }}</p>
+        <p *ngIf="userDetails$ | async as userDetails">{{ userDetails | json }}</p>
+        <span>You can also </span>
+        <button (click)="logout()" mat-raised-button>Logout</button></mat-card-content
+      >
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noUserLoggedIn>
+    <mat-card-content>
+      <span>You should log in first <a [routerLink]="'../login'">here</a></span>
+    </mat-card-content>
+  </ng-template>
+</mat-card>
