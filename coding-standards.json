@@ -6,6 +6,11 @@
       "router": ["CONSTRUCTOR"],
       "activatedRoute": ["CONSTRUCTOR"]
     },
+    "guard": {
+      "model": ["PROPERTY"],
+      "service": ["CONSTRUCTOR"],
+      "router": ["CONSTRUCTOR"]
+    },
     "service": {
       "httpClient": ["CONSTRUCTOR"],
       "model": ["PARAMETER", "RETURN"]
@@ -45,6 +50,12 @@
     "query-model": {
       "type": "DATA_STRUCTURE",
       "folder": "query-models"
+    },
+    "guard": {
+      "id": "guard",
+      "type": "ANGULAR_GUARD",
+      "suffix": "Guard",
+      "folder": "guards/$name$"
     }
   }
 }
