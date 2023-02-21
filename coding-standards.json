@@ -13,6 +13,7 @@
     },
     "service": {
       "httpClient": ["CONSTRUCTOR"],
+      "service": ["CONSTRUCTOR"],
       "model": ["PARAMETER", "RETURN", "PROPERTY"]
     }
   },
