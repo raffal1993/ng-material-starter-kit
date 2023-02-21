@@ -15,9 +15,7 @@ export class RefreshAuthInterceptorService implements HttpInterceptor {
       catchError((e) => {
         if (e.status === 403 && e.error.message === 'Token is invalid') {
           return refreshToken
-            ? this._authService
-                .getRefreshToken(refreshToken)
-                .pipe(switchMap((_) => next.handle(req)))
+            ? this._authService.getRefreshToken().pipe(switchMap((_) => next.handle(req)))
             : of(e);
         }
         return of(e);

@@ -32,11 +32,11 @@ export class AuthService {
       );
   }
 
-  getRefreshToken(refreshToken: string): Observable<RefreshTokenDataModel> {
+  getRefreshToken(): Observable<RefreshTokenDataModel> {
     return this._httpClient
       .post<ResponseModel<RefreshTokenDataModel>>(`${environment.BASE_URL}/auth/refresh`, {
         data: {
-          refreshToken,
+          refreshToken: this._getRefreshToken(),
         },
       })
       .pipe(
@@ -52,6 +52,10 @@ export class AuthService {
   logoutUser(): void {
     this._removeAccessToken();
     this._removeRefreshToken();
+  }
+
+  private _getRefreshToken(): string {
+    return this._storage.getItem('refreshToken') || '';
   }
 
   private _removeAccessToken(): void {
