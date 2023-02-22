@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { AuthDataModel, RefreshTokenDataModel } from '../models/auth-data.model';
 import { ResponseModel } from '../models/response.model';
 import { environment } from 'src/environments/environment';
+import { LoginDataModel } from '../models/login-data.model';
+import { RegisterDataModel } from '../models/register-data.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -12,15 +13,15 @@ export class AuthService {
     this._storage.getItem('accessToken')
   );
 
-  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
-    this._storage.getItem('refreshToken')
-  );
+  private isEmailVerifiedSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+    string | null
+  >(this._storage.getItem('isEmailVerified'));
 
   constructor(private _httpClient: HttpClient, private _storage: Storage) {}
 
-  login(email: string, password: string): Observable<AuthDataModel> {
+  login(email: string, password: string): Observable<LoginDataModel> {
     return this._httpClient
-      .post<ResponseModel<AuthDataModel>>(`${environment.BASE_URL}/auth/login`, {
+      .post<ResponseModel<LoginDataModel>>(`${environment.BASE_URL}/auth/login`, {
         data: {
           email,
           password,
@@ -28,34 +29,29 @@ export class AuthService {
       })
       .pipe(
         map((r) => r.data),
-        tap((data) => this._setTokens(data))
+        tap((data) => this._setUserData(data))
       );
   }
-
-  getRefreshToken(): Observable<RefreshTokenDataModel> {
+  register(email: string, password: string): Observable<RegisterDataModel> {
     return this._httpClient
-      .post<ResponseModel<RefreshTokenDataModel>>(`${environment.BASE_URL}/auth/refresh`, {
+      .post<ResponseModel<RegisterDataModel>>(`${environment.BASE_URL}/auth/register2`, {
         data: {
-          refreshToken: this._getRefreshTokenfromLS(),
+          email,
+          password,
         },
       })
-      .pipe(
-        map((r) => r.data),
-        tap((data) => this._setTokens(data))
-      );
+      .pipe(map((r) => r.data));
+  }
+
+  isEmailVerified(): Observable<string | null> {
+    return this.isEmailVerifiedSubject
+      .asObservable()
+      .pipe(map((isVerify) => (isVerify ? String(isVerify) : null)));
   }
 
   logoutUser(): void {
     this._removeAccessToken();
-    this._removeRefreshToken();
-  }
-
-  isAccessToken(): Observable<boolean> {
-    return this.accessTokenSubject.asObservable().pipe(map((token) => !!token));
-  }
-
-  private _getRefreshTokenfromLS(): string {
-    return this._storage.getItem('refreshToken') || '';
+    this._removeIsEmailVerified();
   }
 
   private _removeAccessToken(): void {
@@ -63,16 +59,15 @@ export class AuthService {
     this._storage.removeItem('accessToken');
   }
 
-  private _removeRefreshToken(): void {
-    this.refreshTokenSubject.next(null);
-    this._storage.removeItem('refreshToken');
+  private _removeIsEmailVerified(): void {
+    this.isEmailVerifiedSubject.next(null);
+    this._storage.removeItem('isEmailVerified');
   }
 
-  private _setTokens(data: AuthDataModel | RefreshTokenDataModel): void {
+  private _setUserData(data: LoginDataModel): void {
     this.accessTokenSubject.next(data.accessToken);
     this._storage.setItem('accessToken', data.accessToken);
-
-    this.refreshTokenSubject.next(data.refreshToken);
-    this._storage.setItem('refreshToken', data.refreshToken);
+    this.isEmailVerifiedSubject.next(data.emailVerified);
+    this._storage.setItem('isEmailVerified', data.emailVerified);
   }
 }

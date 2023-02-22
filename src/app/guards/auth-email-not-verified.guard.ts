@@ -4,13 +4,15 @@ import { map, Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthLoggedGuard implements CanActivate {
+export class AuthEmailNotVerified implements CanActivate {
   constructor(private _authService: AuthService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean | UrlTree> | UrlTree {
-    return this._authService.isAccessToken().pipe(
-      map((isAccessToken) => {
-        return isAccessToken ? true : this._router.parseUrl(route.data['redirectToLogin']);
+    return this._authService.isEmailVerified().pipe(
+      map((isVerified) => {
+        if (isVerified === 'true') return true;
+        if (isVerified === 'false') return this._router.parseUrl(route.data['redirectToVerify']);
+        return this._router.parseUrl(route.data['redirectToLogin']);
       })
     );
   }

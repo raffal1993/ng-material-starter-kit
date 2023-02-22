@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { RefreshAuthInterceptorService } from './interceptors/refresh-auth-interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,10 +15,7 @@ import { RefreshAuthInterceptorService } from './interceptors/refresh-auth-inter
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [
-    { provide: Storage, useValue: localStorage },
-    { provide: HTTP_INTERCEPTORS, useClass: RefreshAuthInterceptorService, multi: true },
-  ],
+  providers: [{ provide: Storage, useValue: localStorage }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

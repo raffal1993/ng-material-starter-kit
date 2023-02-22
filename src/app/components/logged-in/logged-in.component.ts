@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,14 +9,10 @@ import { AuthService } from '../../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoggedInComponent {
-  constructor(
-    private _authService: AuthService,
-    private _router: Router,
-    private _activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private _authService: AuthService, private _router: Router) {}
 
   logout(): void {
     this._authService.logoutUser();
-    this._router.navigate(['../login'], { relativeTo: this._activatedRoute });
+    this._router.navigate(['/register']);
   }
 }
