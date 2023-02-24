@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { RegisterComponent } from './register.component';
+import { LoginAdminComponent } from './login-admin.component';
 
 @NgModule({
   imports: [
@@ -18,8 +18,8 @@ import { RegisterComponent } from './register.component';
     MatButtonModule,
     RouterModule,
   ],
-  declarations: [RegisterComponent],
+  declarations: [LoginAdminComponent],
   providers: [],
-  exports: [RegisterComponent],
+  exports: [LoginAdminComponent],
 })
-export class RegisterComponentModule {}
+export class LoginAdminComponentModule {}

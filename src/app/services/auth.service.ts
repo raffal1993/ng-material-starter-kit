@@ -5,7 +5,6 @@ import { map, tap } from 'rxjs/operators';
 import { ResponseModel } from '../models/response.model';
 import { environment } from 'src/environments/environment';
 import { LoginDataModel } from '../models/login-data.model';
-import { RegisterDataModel } from '../models/register-data.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,13 +12,9 @@ export class AuthService {
     this._storage.getItem('accessToken')
   );
 
-  private isEmailVerifiedSubject: BehaviorSubject<string | null> = new BehaviorSubject<
-    string | null
-  >(this._storage.getItem('isEmailVerified'));
-
   constructor(private _httpClient: HttpClient, private _storage: Storage) {}
 
-  login(email: string, password: string): Observable<LoginDataModel> {
+  loginUser(email: string, password: string): Observable<LoginDataModel> {
     return this._httpClient
       .post<ResponseModel<LoginDataModel>>(`${environment.BASE_URL}/auth/login`, {
         data: {
@@ -32,26 +27,22 @@ export class AuthService {
         tap((data) => this._setUserData(data))
       );
   }
-  register(email: string, password: string): Observable<RegisterDataModel> {
+  loginAdmin(email: string, password: string): Observable<LoginDataModel> {
     return this._httpClient
-      .post<ResponseModel<RegisterDataModel>>(`${environment.BASE_URL}/auth/register2`, {
+      .post<ResponseModel<LoginDataModel>>(`${environment.BASE_URL}/auth/login-admin`, {
         data: {
           email,
           password,
         },
       })
-      .pipe(map((r) => r.data));
+      .pipe(
+        map((r) => r.data)
+        //     tap((data) => this._setUserData(data))
+      );
   }
-
-  isEmailVerified(): Observable<string | null> {
-    return this.isEmailVerifiedSubject
-      .asObservable()
-      .pipe(map((isVerify) => (isVerify ? String(isVerify) : null)));
-  }
-
+  //   https://us-central1-courses-auth.cloudfunctions.net/auth/login-admin
   logoutUser(): void {
     this._removeAccessToken();
-    this._removeIsEmailVerified();
   }
 
   private _removeAccessToken(): void {
@@ -59,15 +50,8 @@ export class AuthService {
     this._storage.removeItem('accessToken');
   }
 
-  private _removeIsEmailVerified(): void {
-    this.isEmailVerifiedSubject.next(null);
-    this._storage.removeItem('isEmailVerified');
-  }
-
   private _setUserData(data: LoginDataModel): void {
     this.accessTokenSubject.next(data.accessToken);
     this._storage.setItem('accessToken', data.accessToken);
-    this.isEmailVerifiedSubject.next(data.emailVerified);
-    this._storage.setItem('isEmailVerified', data.emailVerified);
   }
 }

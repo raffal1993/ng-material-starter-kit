@@ -1,47 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
+import { LoginUserComponent } from './components/login-user/login-user.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
-import { LoginComponentModule } from './components/login/login.component-module';
+import { LoginAdminComponent } from './components/login-admin/login-admin.component';
+import { LoginUserComponentModule } from './components/login-user/login-user.component-module';
 import { LoggedInComponentModule } from './components/logged-in/logged-in.component-module';
-import { RegisterComponent } from './components/register/register.component';
-import { RegisterComponentModule } from './components/register/register.component-module';
-import { VerifyComponent } from './components/verify/verify.component';
-import { VerifyComponentModule } from './components/verify/verify.component-module';
-import { AuthEmailNotVerified } from './guards/auth-email-not-verified.guard';
-import { AuthEmailVerified } from './guards/auth-email-verified.guard';
+import { LoginAdminComponentModule } from './components/login-admin/login-admin.component-module';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      {
-        path: 'login',
-        component: LoginComponent,
-      },
-      { path: 'register', component: RegisterComponent },
-      {
-        path: 'logged-in',
-        component: LoggedInComponent,
-        canActivate: [AuthEmailNotVerified],
-        data: {
-          redirectToLogin: '/login',
-          redirectToVerify: '/verify',
-        },
-      },
-      {
-        path: 'verify',
-        component: VerifyComponent,
-        canActivate: [AuthEmailVerified],
-        data: {
-          redirectToLogin: '/login',
-          redirectToLoggedIn: '/logged-in',
-        },
-      },
+      { path: 'login-user', component: LoginUserComponent },
+      { path: 'logged-in', component: LoggedInComponent },
+      { path: 'login-admin', component: LoginAdminComponent },
     ]),
-    LoginComponentModule,
+    LoginUserComponentModule,
     LoggedInComponentModule,
-    RegisterComponentModule,
-    VerifyComponentModule,
+    LoginAdminComponentModule,
   ],
   exports: [RouterModule],
 })

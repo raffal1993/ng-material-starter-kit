@@ -13,6 +13,5 @@ export class LoggedInComponent {
 
   logout(): void {
     this._authService.logoutUser();
-    this._router.navigate(['/register']);
   }
 }

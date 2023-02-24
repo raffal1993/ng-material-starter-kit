@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+  selector: 'app-login-user',
+  templateUrl: './login-user.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginUserComponent {
   readonly loginForm: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -32,7 +32,7 @@ export class LoginComponent {
 
     if (!loginForm.valid) return;
 
-    this._authService.login(email, password).subscribe({
+    this._authService.loginUser(email, password).subscribe({
       next: () => {
         this._router.navigate(['/logged-in']);
       },

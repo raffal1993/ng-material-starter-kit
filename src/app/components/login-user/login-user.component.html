@@ -1,5 +1,5 @@
 <mat-card
-  ><mat-card-title>Login</mat-card-title
+  ><mat-card-title>Login User</mat-card-title
   ><mat-card-content
     ><form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmitted(loginForm)">
       <div>
@@ -33,6 +33,5 @@
       <mat-error *ngIf="loginForm.getError('HTTPResponseError') as errorr">{{ errorr }}</mat-error>
       <div><button type="submit" mat-raised-button color="primary">Login</button></div>
     </form>
-    <button [routerLink]="'/register'" mat-raised-button>Go to Register Page</button>
   </mat-card-content></mat-card
 >
