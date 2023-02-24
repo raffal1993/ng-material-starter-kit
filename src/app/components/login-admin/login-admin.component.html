@@ -31,7 +31,6 @@
         >
       </div>
       <mat-error *ngIf="loginForm.getError('isAdminExist') as errorr">{{ errorr }}</mat-error>
-
       <mat-error *ngIf="loginForm.getError('HTTPResponseError') as errorr">{{ errorr }}</mat-error>
       <div><button type="submit" mat-raised-button color="primary">Login</button></div>
     </form>
