@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AdminLoginDataModel } from '../models/admin-login-data.model';
 import { UserLoginDataModel } from '../models/user-login-data.model';
 
@@ -19,8 +19,8 @@ export class AuthStorageService {
 
   constructor(private _storage: Storage) {}
 
-  getRole(): Observable<string | null> {
-    return this.userRoleSubject.asObservable();
+  isAdmin(): Observable<boolean> {
+    return this.userRoleSubject.asObservable().pipe(map((role) => role === 'admin'));
   }
 
   getEmail(): Observable<string | null> {

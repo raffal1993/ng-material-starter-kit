@@ -11,9 +11,7 @@ import { AuthStorageService } from '../../services/auth-storage.service';
 })
 export class LoggedInComponent {
   readonly email$: Observable<string | null> = this._authStorageService.getEmail();
-  readonly isAdmin$: Observable<boolean> = this._authStorageService
-    .getRole()
-    .pipe(map((role) => role === 'admin'));
+  readonly isAdmin$: Observable<boolean> = this._authStorageService.isAdmin();
 
   constructor(private _authStorageService: AuthStorageService, private _router: Router) {}
 

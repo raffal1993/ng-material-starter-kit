@@ -19,9 +19,7 @@ export class AdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
     return this._authStorageService
-      .getRole()
-      .pipe(
-        map((role) => (role === 'admin' ? true : this._router.parseUrl(route.data['redirectUrl'])))
-      );
+      .isAdmin()
+      .pipe(map((isAdmin) => (isAdmin ? true : this._router.parseUrl(route.data['redirectUrl']))));
   }
 }
