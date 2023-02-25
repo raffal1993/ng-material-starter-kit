@@ -15,7 +15,10 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [{ provide: Storage, useValue: localStorage }],
+  providers: [
+    { provide: Storage, useValue: localStorage },
+    // {provide: Window, useValue: window}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

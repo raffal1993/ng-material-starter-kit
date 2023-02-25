@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthStorageService } from '../../services/auth-storage.service';
 
 @Component({
   selector: 'app-logged-in',
@@ -9,9 +10,15 @@ import { AuthService } from '../../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoggedInComponent {
-  constructor(private _authService: AuthService, private _router: Router) {}
+  readonly email$: Observable<string | null> = this._authStorageService.getEmail();
+  readonly isAdmin$: Observable<boolean> = this._authStorageService
+    .getRole()
+    .pipe(map((role) => role === 'admin'));
+
+  constructor(private _authStorageService: AuthStorageService, private _router: Router) {}
 
   logout(): void {
-    this._authService.logoutUser();
+    this._authStorageService.logoutUser();
+    this._router.navigate(['/login-user']);
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthUserService } from 'src/app/services/auth-user.service';
 
 @Component({
   selector: 'app-login-user',
@@ -23,7 +23,7 @@ export class LoginUserComponent {
   constructor(
     private _router: Router,
     private _cdr: ChangeDetectorRef,
-    private _authService: AuthService
+    private _authUser: AuthUserService
   ) {}
 
   onLoginFormSubmitted(loginForm: FormGroup): void {
@@ -32,12 +32,12 @@ export class LoginUserComponent {
 
     if (!loginForm.valid) return;
 
-    this._authService.loginUser(email, password).subscribe({
+    this._authUser.loginUser(email, password).subscribe({
       next: () => {
         this._router.navigate(['/logged-in']);
       },
       error: (e) => {
-        this.loginForm.setErrors({ HTTPResponseError: e.error.message });
+        this.loginForm.setErrors({ HTTPResponseError: e.error ? e.error.message : '' });
         this._cdr.detectChanges();
       },
     });

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthAdminService } from 'src/app/services/auth-admin.service';
 
 @Component({
   selector: 'app-login-admin',
@@ -23,7 +23,7 @@ export class LoginAdminComponent {
   constructor(
     private _router: Router,
     private _cdr: ChangeDetectorRef,
-    private _authService: AuthService
+    private _authAdmin: AuthAdminService
   ) {}
 
   onLoginFormSubmitted(loginForm: FormGroup): void {
@@ -32,15 +32,16 @@ export class LoginAdminComponent {
 
     if (!loginForm.valid) return;
 
-    this._authService.loginAdmin(email, password).subscribe({
-      next: () => {
+    this._authAdmin.loginAdmin(email, password).subscribe({
+      next: (e) => {
         this._router.navigate(['/logged-in']);
       },
       error: (e) => {
         this.loginForm.setErrors({
-          HTTPResponseError: e.error.message,
+          HTTPResponseError: e.error ? e.error.message : '',
           isAdminExist: 'Non existing admin',
         });
+
         this._cdr.detectChanges();
       },
     });

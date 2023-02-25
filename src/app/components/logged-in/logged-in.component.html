@@ -1,6 +1,8 @@
-<mat-card
+<mat-card *ngIf="email$ | async as email"
   ><mat-card-content>
-    <p>You are logged in and verified</p>
+    <mat-card-title>Welcome {{ email }}</mat-card-title>
+    <p>This is visible to everyone</p>
+    <p *ngIf="isAdmin$ | async">This is visible only to admins!</p>
     <button (click)="logout()" mat-raised-button>Logout</button>
   </mat-card-content></mat-card
 >

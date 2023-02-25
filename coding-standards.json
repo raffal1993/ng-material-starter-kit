@@ -56,7 +56,7 @@
       "id": "guard",
       "type": "ANGULAR_GUARD",
       "suffix": "Guard",
-      "folder": "guards/$name$"
+      "folder": "guards"
     }
   }
 }
