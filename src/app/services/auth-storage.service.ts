@@ -17,7 +17,7 @@ export class AuthStorageService {
     this._storage.getItem('email')
   );
 
-  constructor(private _storage: Storage) {}
+  constructor(private _storage: Storage, private _window: Window) {}
 
   isAdmin(): Observable<boolean> {
     return this.userRoleSubject.asObservable().pipe(map((role) => role === 'admin'));
@@ -33,19 +33,15 @@ export class AuthStorageService {
     this._removeEmail();
   }
 
-  setUserData(
-    data: AdminLoginDataModel | UserLoginDataModel,
-    role: 'user' | 'admin',
-    email: string
-  ): void {
+  setUserData(data: AdminLoginDataModel | UserLoginDataModel, email: string): void {
     this.accessTokenSubject.next(data.accessToken);
     this._storage.setItem('accessToken', data.accessToken);
 
-    //     const roleByAccessToken =
-    //       JSON.parse(this._window.atob(data.accessToken.split('.')[1]))['role']
+    const roleByAccessToken =
+      JSON.parse(this._window.atob(data.accessToken.split('.')[1]))['role'] || 'user';
 
-    this.userRoleSubject.next(role);
-    this._storage.setItem('role', role);
+    this.userRoleSubject.next(roleByAccessToken);
+    this._storage.setItem('role', roleByAccessToken);
 
     this.emailSubject.next(email);
     this._storage.setItem('email', email);

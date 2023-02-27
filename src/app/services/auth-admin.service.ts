@@ -20,7 +20,7 @@ export class AuthAdminService {
       })
       .pipe(
         map((r) => r.data),
-        tap((data) => this._authStorageService.setUserData(data, 'admin', email))
+        tap((data) => this._authStorageService.setUserData(data, email))
       );
   }
 }

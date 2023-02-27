@@ -20,7 +20,7 @@ export class AuthUserService {
       })
       .pipe(
         map((r) => r.data),
-        tap((data) => this._authStorageService.setUserData(data, 'user', email))
+        tap((data) => this._authStorageService.setUserData(data, email))
       );
   }
 }

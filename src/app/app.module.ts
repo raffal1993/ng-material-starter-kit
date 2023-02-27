@@ -17,7 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     { provide: Storage, useValue: localStorage },
-    // {provide: Window, useValue: window}
+    { provide: Window, useValue: window },
   ],
   bootstrap: [AppComponent],
 })
