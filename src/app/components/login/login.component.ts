@@ -6,24 +6,24 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthAdminService } from 'src/app/services/auth-admin.service';
+import { AuthUserService } from 'src/app/services/auth-user.service';
 
 @Component({
-  selector: 'app-login-admin',
-  templateUrl: './login-admin.component.html',
+  selector: 'app-login',
+  templateUrl: './login.component.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginAdminComponent {
+export class LoginComponent {
   readonly loginForm: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('zimmer0093@gmail.com'),
+    password: new FormControl('zimmer0093@gmail.com'),
   });
 
   constructor(
     private _router: Router,
     private _cdr: ChangeDetectorRef,
-    private _authAdmin: AuthAdminService
+    private _authUser: AuthUserService
   ) {}
 
   onLoginFormSubmitted(loginForm: FormGroup): void {
@@ -32,16 +32,12 @@ export class LoginAdminComponent {
 
     if (!loginForm.valid) return;
 
-    this._authAdmin.loginAdmin(email, password).subscribe({
-      next: (e) => {
+    this._authUser.loginUser(email, password).subscribe({
+      next: () => {
         this._router.navigate(['/logged-in']);
       },
       error: (e) => {
-        this.loginForm.setErrors({
-          HTTPResponseError: e.error ? e.error.message : '',
-          isAdminExist: 'Non existing admin',
-        });
-
+        this.loginForm.setErrors({ HTTPResponseError: e.error ? e.error.message : '' });
         this._cdr.detectChanges();
       },
     });

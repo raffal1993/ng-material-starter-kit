@@ -1,0 +1,36 @@
+<mat-card
+  ><mat-card-title>Complete User Profile</mat-card-title
+  ><mat-card-content
+    ><form [formGroup]="userProfileForm" (ngSubmit)="onUserProfileFormSubmitted(userProfileForm)">
+      <div>
+        <mat-form-field appearance="fill"
+          ><mat-label>First Name</mat-label
+          ><input
+            matInput
+            type="text"
+            placeholder="First Name"
+            formControlName="firstName"
+            required
+          /><mat-error *ngIf="userProfileForm.get('firstName')!.invalid"
+            >firstName is invalid</mat-error
+          ></mat-form-field
+        >
+      </div>
+      <div>
+        <mat-form-field appearance="fill"
+          ><mat-label>Last Name</mat-label
+          ><input
+            matInput
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+            required
+          /><mat-error *ngIf="userProfileForm.get('lastName')!.invalid"
+            >lastName is invalid</mat-error
+          ></mat-form-field
+        >
+      </div>
+      <div><button type="submit" mat-raised-button color="primary">Submit</button></div>
+    </form></mat-card-content
+  ></mat-card
+>

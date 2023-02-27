@@ -1,34 +1,32 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginUserComponent } from './components/login-user/login-user.component';
+import { LoginComponent } from './components/login/login.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
-import { LoginAdminComponent } from './components/login-admin/login-admin.component';
-import { AdminComponent } from './components/admin/admin.component';
-import { LoginUserComponentModule } from './components/login-user/login-user.component-module';
+import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
 import { LoggedInComponentModule } from './components/logged-in/logged-in.component-module';
-import { LoginAdminComponentModule } from './components/login-admin/login-admin.component-module';
-import { AdminComponentModule } from './components/admin/admin.component-module';
-import { AdminGuard } from './guards/admin.guard';
+import { LoginComponentModule } from './components/login/login.component-module';
+import { CompleteProfileComponentModule } from './components/complete-profile/complete-profile.component-module';
+import { AuthLoginGuard } from './guards/auth-login.guard';
+import { AuthProfileGuard } from './guards/auth-profile.guard';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: 'login-user', component: LoginUserComponent },
-      { path: 'logged-in', component: LoggedInComponent },
-      { path: 'login-admin', component: LoginAdminComponent },
+      { path: 'login', component: LoginComponent },
       {
-        path: 'admin',
-        component: AdminComponent,
-        canActivate: [AdminGuard],
+        path: 'logged-in',
+        component: LoggedInComponent,
+        canActivate: [AuthLoginGuard, AuthProfileGuard],
         data: {
-          redirectUrl: '/logged-in',
+          redirectToCompleteProfile: 'complete-profile',
+          redirectToLogin: 'login',
         },
       },
+      { path: 'complete-profile', component: CompleteProfileComponent },
     ]),
-    LoginUserComponentModule,
     LoggedInComponentModule,
-    LoginAdminComponentModule,
-    AdminComponentModule,
+    LoginComponentModule,
+    CompleteProfileComponentModule,
   ],
   exports: [RouterModule],
 })

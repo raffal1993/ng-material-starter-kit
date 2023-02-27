@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AdminLoginDataModel } from '../models/admin-login-data.model';
-import { UserLoginDataModel } from '../models/user-login-data.model';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
+import { UserLoginDataModel, UserProfileDataModel } from '../models/user-auth-data.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthStorageService {
@@ -9,42 +8,42 @@ export class AuthStorageService {
     this._storage.getItem('accessToken')
   );
 
-  private userRoleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
-    this._storage.getItem('role')
+  private firstNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    this._storage.getItem('firstName')
   );
 
-  private emailSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
-    this._storage.getItem('email')
+  private lastNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    this._storage.getItem('lastName')
   );
 
-  constructor(private _storage: Storage, private _window: Window) {}
+  constructor(private _storage: Storage) {}
 
-  isAdmin(): Observable<boolean> {
-    return this.userRoleSubject.asObservable().pipe(map((role) => role === 'admin'));
+  isAccessToken(): Observable<boolean> {
+    return this.accessTokenSubject.asObservable().pipe(map((token) => !!token));
   }
 
-  getEmail(): Observable<string | null> {
-    return this.emailSubject.asObservable();
+  isUserProfileComplete(): Observable<boolean> {
+    return combineLatest([
+      this.firstNameSubject.asObservable(),
+      this.lastNameSubject.asObservable(),
+    ]).pipe(map(([firstName, lastName]) => !!firstName && !!lastName));
   }
 
   logoutUser(): void {
     this._removeAccessToken();
-    this._removeUsersRole();
-    this._removeEmail();
+    this._removeUserProfile();
   }
 
-  setUserData(data: AdminLoginDataModel | UserLoginDataModel, email: string): void {
+  setAccessToken(data: UserLoginDataModel): void {
     this.accessTokenSubject.next(data.accessToken);
     this._storage.setItem('accessToken', data.accessToken);
+  }
 
-    const roleByAccessToken =
-      JSON.parse(this._window.atob(data.accessToken.split('.')[1]))['role'] || 'user';
-
-    this.userRoleSubject.next(roleByAccessToken);
-    this._storage.setItem('role', roleByAccessToken);
-
-    this.emailSubject.next(email);
-    this._storage.setItem('email', email);
+  setUserProfile({ firstName, lastName }: UserProfileDataModel): void {
+    this.firstNameSubject.next(firstName);
+    this._storage.setItem('firstName', firstName);
+    this.lastNameSubject.next(lastName);
+    this._storage.setItem('lastName', lastName);
   }
 
   private _removeAccessToken(): void {
@@ -52,13 +51,10 @@ export class AuthStorageService {
     this._storage.removeItem('accessToken');
   }
 
-  private _removeUsersRole(): void {
-    this.userRoleSubject.next(null);
-    this._storage.removeItem('role');
-  }
-
-  private _removeEmail(): void {
-    this.emailSubject.next(null);
-    this._storage.removeItem('email');
+  private _removeUserProfile(): void {
+    this.firstNameSubject.next(null);
+    this._storage.removeItem('firstName');
+    this.lastNameSubject.next(null);
+    this._storage.removeItem('lastName');
   }
 }
