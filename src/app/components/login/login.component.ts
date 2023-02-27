@@ -16,8 +16,8 @@ import { AuthUserService } from 'src/app/services/auth-user.service';
 })
 export class LoginComponent {
   readonly loginForm: FormGroup = new FormGroup({
-    email: new FormControl('zimmer0093@gmail.com'),
-    password: new FormControl('zimmer0093@gmail.com'),
+    email: new FormControl(''),
+    password: new FormControl(''),
   });
 
   constructor(
