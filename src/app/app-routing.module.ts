@@ -9,7 +9,7 @@ import { RegisterComponentModule } from './components/register/register.componen
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
 import { AuthEmailNotVerified } from './guards/auth-email-not-verified.guard';
-import { AuthEmailVerified } from './guards/auth-email-verified.guard';
+// import { AuthEmailVerified } from './guards/auth-email-verified.guard';
 
 @NgModule({
   imports: [
@@ -31,11 +31,11 @@ import { AuthEmailVerified } from './guards/auth-email-verified.guard';
       {
         path: 'verify',
         component: VerifyComponent,
-        canActivate: [AuthEmailVerified],
-        data: {
-          redirectToLogin: '/login',
-          redirectToLoggedIn: '/logged-in',
-        },
+        //       canActivate: [AuthEmailVerified],
+        //       data: {
+        //         redirectToLogin: '/login',
+        //         redirectToLoggedIn: '/logged-in',
+        //       },
       },
     ]),
     LoginComponentModule,
