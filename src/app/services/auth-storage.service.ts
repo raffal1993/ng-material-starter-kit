@@ -10,7 +10,7 @@ export class AuthStorageService {
   );
 
   private userRoleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
-    this._storage.getItem('role')
+    null
   );
 
   private emailSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
@@ -41,7 +41,6 @@ export class AuthStorageService {
       JSON.parse(this._window.atob(data.accessToken.split('.')[1]))['role'] || 'user';
 
     this.userRoleSubject.next(roleByAccessToken);
-    this._storage.setItem('role', roleByAccessToken);
 
     this.emailSubject.next(email);
     this._storage.setItem('email', email);
@@ -54,7 +53,6 @@ export class AuthStorageService {
 
   private _removeUsersRole(): void {
     this.userRoleSubject.next(null);
-    this._storage.removeItem('role');
   }
 
   private _removeEmail(): void {
