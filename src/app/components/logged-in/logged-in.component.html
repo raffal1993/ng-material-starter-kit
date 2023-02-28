@@ -1,0 +1,7 @@
+<mat-card
+  ><mat-card-title *ngIf="isAdmin$ | async as isAdmin; else isUser">Welcome Admin</mat-card-title>
+  <ng-template #isUser>
+    <mat-card-title>Welcome User</mat-card-title>
+  </ng-template>
+  <button (click)="logout()" mat-raised-button>Logout</button>
+</mat-card>
