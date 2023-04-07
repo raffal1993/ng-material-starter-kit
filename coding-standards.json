@@ -57,6 +57,9 @@
       "type": "ANGULAR_GUARD",
       "suffix": "Guard",
       "folder": "guards"
+    },
+    "pipe": {
+      "type": "ANGULAR_PIPE"
     }
   }
 }
