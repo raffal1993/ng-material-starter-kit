@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Confirm your choice</h2>
+<mat-dialog-content>{{ data.confirmDialog }}</mat-dialog-content>
+<mat-dialog-actions cdkTrapFocus>
+  <button
+    mat-button
+    cdkFocusRegionStart
+    [mat-dialog-close]="false"
+    (click)="data.onClose(false)"
+  >
+    Cancel
+  </button>
+  <button mat-button [mat-dialog-close]="true" (click)="data.onClose(true)">
+    Confirm
+  </button>
+</mat-dialog-actions>
