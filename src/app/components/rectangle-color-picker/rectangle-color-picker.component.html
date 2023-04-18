@@ -1,0 +1,11 @@
+<form [formGroup]="colorPickerForm">
+  <input type="color" placeholder="Color Picker" formControlName="colorPicker" />
+  <br />
+  <ng-container>
+    <mat-error
+      class="error"
+      *ngIf="colorPickerForm.controls['colorPicker'].hasError('invalidColor')"
+      >The color value is not red enough</mat-error
+    >
+  </ng-container>
+</form>
