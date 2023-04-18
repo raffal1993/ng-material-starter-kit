@@ -15,9 +15,33 @@
       "httpClient": ["CONSTRUCTOR"],
       "service": ["CONSTRUCTOR"],
       "model": ["PARAMETER", "RETURN", "PROPERTY"]
+    },
+    "directive": {
+      "model": ["PROPERTY"],
+      "service": ["CONSTRUCTOR"],
+      "elementRef": ["CONSTRUCTOR"],
+      "renderer2": ["CONSTRUCTOR"],
+      "templateRef": ["CONSTRUCTOR"],
+      "viewCotnainerRef": ["CONSTRUCTOR"]
     }
   },
   "external": {
+    "elementRef": {
+      "type": "ElementRef",
+      "module": "@angular/core"
+    },
+    "renderer2": {
+      "type": "Renderer2",
+      "module": "@angular/core"
+    },
+    "templateRef": {
+      "type": "TemplateRef",
+      "module": "@angular/core"
+    },
+    "viewCotnainerRef": {
+      "type": "ViewContainerRef",
+      "module": "@angular/core"
+    },
     "httpClient": {
       "type": "HttpClient",
       "module": "@angular/common/http"
@@ -57,6 +81,18 @@
       "type": "ANGULAR_GUARD",
       "suffix": "Guard",
       "folder": "guards"
+    },
+    "pipe": {
+      "id": "pipe",
+      "type": "ANGULAR_PIPE",
+      "suffix": "Pipe",
+      "folder": "pipes/$name$"
+    },
+    "directive": {
+      "id": "directive",
+      "type": "ANGULAR_DIRECTIVE",
+      "suffix": "Directive",
+      "folder": "directives/$name$"
     }
   }
 }
