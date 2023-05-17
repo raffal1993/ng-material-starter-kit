@@ -1,0 +1,10 @@
+<article>
+  <h2>{{ data.title }}</h2>
+  <p>{{ data.content }}</p>
+  <button *ngIf="!isPreview" [disabled]="isEditModeOn" (click)="onClick()" class="btn">
+    Edit Article
+  </button>
+  <app-article-image
+    [data]="{ isEditModeOn: isEditModeOn, imageUrl: data.imageUrl }"
+  ></app-article-image>
+</article>

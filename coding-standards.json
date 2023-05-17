@@ -60,8 +60,8 @@
       "type": "ANGULAR_COMPONENT",
       "folder": "components/$name$",
       "config": {
-        "stylesExtension": "none",
-        "viewEncapsulation": "None",
+        "stylesExtension": "scss",
+        "viewEncapsulation": "Emulated",
         "selector": "generated",
         "changeDetectionStrategy": "OnPush"
       }

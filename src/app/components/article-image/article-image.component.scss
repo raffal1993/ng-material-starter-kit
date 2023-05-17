@@ -1,0 +1,24 @@
+.showImage {
+  .showImage-btn {
+    background-color: rgb(112, 13, 13);
+  }
+
+  img {
+    width: 80px;
+    display: block;
+    margin: 10px 0px;
+  }
+}
+
+.hideImage-btn {
+  background-color: rgb(13, 112, 4);
+}
+
+.btn {
+  color: white;
+  padding: 2px 5px;
+}
+
+.btn:disabled {
+  background-color: grey;
+}

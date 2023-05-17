@@ -1,0 +1,28 @@
+<div class="container">
+  <app-set-article
+    *ngIf="isEditModeOn$ | async"
+    [buttonText]="editMode$ | async"
+    [form]="articleToEdit$ | async"
+    (setArticle)="setArticle($event)"
+    (setEditMode)="setEditMode($event)"
+  ></app-set-article>
+  <button [disabled]="isEditModeOn$ | async" (click)="setEditMode('add')" class="btn">
+    Add article
+  </button>
+  <button [disabled]="!(isEditModeOn$ | async)" (click)="setEditMode(null)" class="btn">
+    Back
+  </button>
+  <div class="articles" *ngFor="let item of articles$ | async">
+    <app-article
+      (setEditMode)="setEditMode('edit')"
+      (setArticleToEdit)="setArticleToEdit($event)"
+      [data]="{
+        id: item.id,
+        title: item.title,
+        content: item.content,
+        imageUrl: item.imageUrl
+      }"
+      [isEditModeOn]="isEditModeOn$ | async"
+    ></app-article>
+  </div>
+</div>

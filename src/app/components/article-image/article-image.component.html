@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="showImage" *ngIf="isImageVisible$ | async; else hideImage">
+    <button [disabled]="data.isEditModeOn" class="showImage-btn btn" (click)="setImageVisibility()">
+      Hide Image
+    </button>
+    <img [src]="data.imageUrl" [alt]="'articleImage'" />
+  </div>
+
+  <ng-template #hideImage>
+    <button [disabled]="data.isEditModeOn" class="hideImage-btn btn" (click)="setImageVisibility()">
+      Show Image
+    </button>
+  </ng-template>
+</div>

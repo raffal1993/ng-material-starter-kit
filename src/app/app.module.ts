@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { FooterComponentModule } from './components/footer/footer.component-module';
+import { ArticlesComponentModule } from './components/articles/articles.component-module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
     RouterOutlet,
     AppRoutingModule,
     HttpClientModule,
+    FooterComponentModule,
+    ArticlesComponentModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

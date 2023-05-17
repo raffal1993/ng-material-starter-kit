@@ -1,0 +1,60 @@
+<div class="container">
+  <form [formGroup]="formArticle" (ngSubmit)="onFormArticleSubmitted(formArticle)">
+    <div>
+      <mat-form-field
+        ><mat-label>Title</mat-label
+        ><input
+          matInput
+          type="text"
+          placeholder="Title"
+          formControlName="title"
+          required
+        /><mat-error *ngIf="formArticle.get('title')!.invalid"
+          >title is invalid</mat-error
+        ></mat-form-field
+      >
+    </div>
+    <div>
+      <mat-form-field
+        ><mat-label>Content</mat-label
+        ><input
+          matInput
+          type="text"
+          placeholder="Content"
+          formControlName="content"
+          required
+        /><mat-error *ngIf="formArticle.get('content')!.invalid"
+          >content is invalid</mat-error
+        ></mat-form-field
+      >
+    </div>
+    <div>
+      <mat-form-field
+        ><mat-label>Image Url</mat-label
+        ><input
+          matInput
+          type="text"
+          placeholder="Image Url"
+          formControlName="imageUrl"
+          required
+        /><mat-error *ngIf="formArticle.get('imageUrl')!.invalid"
+          >imageUrl is invalid</mat-error
+        ></mat-form-field
+      >
+    </div>
+    <div>
+      <button [disabled]="formArticle.invalid" type="submit" class="btn">
+        {{ buttonText | titlecase }}
+      </button>
+    </div>
+  </form>
+  <app-article
+    class="preview"
+    [isPreview]="true"
+    [data]="{
+      title: formArticle.get('title')?.value,
+      content: formArticle.get('content')?.value,
+      imageUrl: formArticle.get('imageUrl')?.value
+    }"
+  ></app-article>
+</div>
